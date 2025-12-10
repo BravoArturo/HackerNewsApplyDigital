@@ -1,6 +1,12 @@
+import { RoutesType } from '../types';
+
 export type HomeStackParamList = {
-  Home: undefined;
+  HackerNews: undefined;
   HackerWebView: undefined;
 };
 
-export type HomeNavigatorViewProps = {};
+export type HomeStackRoutes = RoutesType<HomeStackParamList>;
+
+export type HomeNavigatorViewProps = {
+  routes: HomeStackRoutes;
+};

@@ -3,9 +3,8 @@ import React from 'react';
 import { TabNavigatorViewProps } from './types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabStackParamList } from './types';
+const Tab = createBottomTabNavigator<TabStackParamList>();
 const TabNavigatorView: React.FC<TabNavigatorViewProps> = ({ routes }) => {
-  const Tab = createBottomTabNavigator<TabStackParamList>();
-
   return (
     <Tab.Navigator
       initialRouteName={'HomeStack'}
