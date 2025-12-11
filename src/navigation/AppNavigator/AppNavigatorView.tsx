@@ -6,17 +6,18 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const AppNavigatorView = () => {
   const safeAreaInsets = useSafeAreaInsets();
 
   return (
     <SafeAreaProvider>
-      <View style={[styles.container, safeAreaInsets]}>
+      <GestureHandlerRootView style={[styles.container, safeAreaInsets]}>
         <NavigationContainer>
           <TabNavigatorScreen />
         </NavigationContainer>
-      </View>
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 };
