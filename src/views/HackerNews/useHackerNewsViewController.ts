@@ -16,6 +16,10 @@ function useHackerNewsViewController(): HackerNewsViewProps {
     setDeletedHackerNewsStorage,
     setFavoritesHackerNewsStorage,
     setHackerNewsStorage,
+    navigateToHackerWebView,
+    navigateToDeletedHackerNews,
+    navigateToFavoritesHackerNews,
+    navigateToSettings,
   } = useHackerNewsViewModel();
 
   const handleChangeIsLoading = (value: boolean) => {
@@ -35,11 +39,45 @@ function useHackerNewsViewController(): HackerNewsViewProps {
     handleChangeIsLoading(false);
   };
 
-  const onPressFavorite = (objectID: string) => {};
+  const onPressFavorite = (objectID: string) => {
+    let newFavoritesHackerNews: string[];
 
-  const onSwipe = (objectID: string) => {};
+    if (favoritesHackerNews.includes(objectID)) {
+      newFavoritesHackerNews = favoritesHackerNews.filter(
+        item => item !== objectID,
+      );
+    } else {
+      newFavoritesHackerNews = [...favoritesHackerNews, objectID];
+    }
+    setFavoritesHackerNewsStorage(newFavoritesHackerNews);
+    changeFavoritesHackerNews(newFavoritesHackerNews);
+  };
 
-  const onPressItem = (story_url: string | undefined) => {};
+  const onSwipe = (objectID: string) => {
+    const newDeletedHackerNews = [...deletedHackerNews, objectID];
+    setDeletedHackerNewsStorage(newDeletedHackerNews);
+    changeDeletedHackerNews(newDeletedHackerNews);
+  };
+
+  const onPressItem = (story_url: string | undefined) => {
+    if (story_url) {
+      navigateToHackerWebView(story_url);
+    } else {
+      Alert.alert('News without url');
+    }
+  };
+
+  const onPressFavoritesHackerNews = () => {
+    navigateToFavoritesHackerNews();
+  };
+
+  const onPressDeletedHackerNews = () => {
+    navigateToDeletedHackerNews();
+  };
+
+  const onPressSettings = () => {
+    navigateToSettings();
+  };
 
   return {
     onRefresh,
@@ -48,6 +86,11 @@ function useHackerNewsViewController(): HackerNewsViewProps {
     onPressFavorite,
     onSwipe,
     onPressItem,
+    deletedHackerNews,
+    favoritesHackerNews,
+    onPressDeletedHackerNews,
+    onPressFavoritesHackerNews,
+    onPressSettings,
   };
 }
 

@@ -1,4 +1,4 @@
-import { HackerNewsAPIType, HackerNew } from '../../../models/news/API/types';
+import { HackerNew } from '../../../../models/news/API/types';
 
 export type HackerNewsScrollViewListProps = {
   onPressFavorite: (objectID: string) => void;
@@ -6,5 +6,7 @@ export type HackerNewsScrollViewListProps = {
   onPressItem: (story_url: string | undefined) => void;
   onRefresh: () => Promise<void>;
   hackerNews: HackerNew[];
+  deletedHackerNews: string[];
+  favoritesHackerNews: string[];
   isLoading: boolean;
 };

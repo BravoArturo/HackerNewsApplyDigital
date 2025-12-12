@@ -10,6 +10,7 @@ const HomeNavigatorView: React.FC<HomeNavigatorViewProps> = ({ routes }) => {
       initialRouteName={'HackerNews'}
       screenOptions={{
         headerShown: false,
+        gestureEnabled: true,
       }}
     >
       {routes.map(routeConfig => (

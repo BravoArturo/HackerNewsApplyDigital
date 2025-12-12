@@ -1,7 +1,6 @@
 import React from 'react';
 
 import HomeNavigatorScreen from '../HomeStackNavigator/HomeNavigatorScreen';
-import FavoritesNavigationScreen from '../FavoritesStackNavigator/FavoritesNavigationScreen';
 import { TabNavigatorViewProps, TabRoutes } from './types';
 
 function useTabNavigatorViewController(): TabNavigatorViewProps {
@@ -9,10 +8,6 @@ function useTabNavigatorViewController(): TabNavigatorViewProps {
     {
       name: 'HomeStack',
       component: HomeNavigatorScreen,
-    },
-    {
-      name: 'FavoritesStack',
-      component: FavoritesNavigationScreen,
     },
   ];
 

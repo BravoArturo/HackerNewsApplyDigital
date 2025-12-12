@@ -7,7 +7,10 @@ import { RouteProp } from '@react-navigation/native';
 
 export type HomeStackParamList = {
   HackerNews: undefined;
-  HackerWebView: undefined;
+  FavoritesHackerNews: undefined;
+  DeletedHackerNews: undefined;
+  Settings: undefined;
+  HackerWebView: { story_url: string };
 };
 
 export type HomeStackRoutes = RoutesType<HomeStackParamList>;
