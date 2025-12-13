@@ -3,7 +3,8 @@ import { AppNavigatorViewProps } from './types';
 import { Alert, Platform } from 'react-native';
 import { name } from '../../../package.json';
 import useAppNavigatorViewModel from './useAppNavigatorViewModel';
-import notifee, { NotificationSettings } from '@notifee/react-native';
+import { AuthorizationStatus } from '@notifee/react-native';
+import { sendHackerNewsNotification } from '../../utils/notifications';
 
 function useAppNavigatorViewController(): AppNavigatorViewProps {
   const {
@@ -16,12 +17,16 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
     (async () => {
       const responseNotificationsPermissionsStatus =
         await checkNotificationsPermissionsStatus();
+      console.log(' a ver', responseNotificationsPermissionsStatus);
+
       if (
         responseNotificationsPermissionsStatus.message == 'success' &&
-        responseNotificationsPermissionsStatus.response == -1
+        responseNotificationsPermissionsStatus.response ==
+          AuthorizationStatus.NOT_DETERMINED
       ) {
         await askUserForNotificationPermissions();
       }
+      await sendHackerNewsNotification('title', 'body');
     })();
   }, []);
 
