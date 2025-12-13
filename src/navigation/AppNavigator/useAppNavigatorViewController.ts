@@ -8,17 +8,18 @@ import { sendHackerNewsNotification } from '../../utils/notifications';
 
 function useAppNavigatorViewController(): AppNavigatorViewProps {
   const {
+    initBackgroundFetch,
     requestNotificationPermissions,
     checkNotificationsPermissionsStatus,
     setPermissionAndroidNotificationRequestedStorage,
+    getHackerNews,
+    setHackerNewsStorage,
   } = useAppNavigatorViewModel();
 
   useEffect(() => {
     (async () => {
       const responseNotificationsPermissionsStatus =
         await checkNotificationsPermissionsStatus();
-      console.log(' a ver', responseNotificationsPermissionsStatus);
-
       if (
         responseNotificationsPermissionsStatus.message == 'success' &&
         responseNotificationsPermissionsStatus.response ==
@@ -26,7 +27,7 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
       ) {
         await askUserForNotificationPermissions();
       }
-      await sendHackerNewsNotification('title', 'body');
+      await activeBackgroudFetch();
     })();
   }, []);
 
@@ -48,6 +49,29 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
     await requestNotificationPermissions();
     if (Platform.OS == 'android') {
       setPermissionAndroidNotificationRequestedStorage(true);
+    }
+  };
+
+  const activeBackgroudFetch = async () => {
+    const status = await initBackgroundFetch(onEventBackgroundFetch);
+    console.log('este es el status', status);
+  };
+
+  const onEventBackgroundFetch = async (taskId: string) => {
+    const responseHackerNews = await getHackerNews();
+    if (responseHackerNews.message == 'success') {
+      const { hits } = responseHackerNews.response;
+      setHackerNewsStorage(hits);
+    }
+    const responseNotificationsPermissionsStatus =
+      await checkNotificationsPermissionsStatus();
+    if (
+      responseNotificationsPermissionsStatus.message == 'success' &&
+      responseNotificationsPermissionsStatus.response ==
+        AuthorizationStatus.AUTHORIZED
+    ) {
+      //TODO: validar ademas el storage del muchacho
+      sendHackerNewsNotification(taskId, Date.now().toString());
     }
   };
 }

@@ -5,11 +5,17 @@ import notifee, {
   AuthorizationStatus,
 } from '@notifee/react-native';
 import { AppNavigatorViewModelType } from './types';
-import { PermissionsAndroid, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import {
   getPermissionAndroidNotificationRequestedStorage,
   setPermissionAndroidNotificationRequestedStorage,
 } from '../../models/notifications/android/storage/notificationsAndroidStorage';
+import BackgroundFetch, {
+  BackgroundFetchStatus,
+} from 'react-native-background-fetch';
+import { setHackerNewsStorage } from '../../models/news/storage/hackerNewsStorage';
+import { getHackerNewsAPI } from '../../models/news/API/news';
+import { HackerNewsAPIType } from '../../models/news/API/types';
 
 function useAppNavigatorViewModel(): AppNavigatorViewModelType {
   const requestNotificationPermissions = async (): Promise<
@@ -46,7 +52,36 @@ function useAppNavigatorViewModel(): AppNavigatorViewModelType {
     }
   };
 
+  const getHackerNews = async (): Promise<
+    ResponseType<HackerNewsAPIType, unknown>
+  > => {
+    try {
+      const response = await getHackerNewsAPI();
+      return { message: 'success', response };
+    } catch (error) {
+      return { message: 'error', error };
+    }
+  };
+
+  const initBackgroundFetch = async (
+    onEvent: (taskId: string) => Promise<void>,
+  ): Promise<BackgroundFetchStatus> => {
+    const onTimeout = async (taskId: string) => {
+      BackgroundFetch.finish(taskId);
+    };
+    const status = await BackgroundFetch.configure(
+      { minimumFetchInterval: 15 },
+      onEvent,
+      onTimeout,
+    );
+
+    return status;
+  };
+
   return {
+    getHackerNews,
+    setHackerNewsStorage,
+    initBackgroundFetch,
     requestNotificationPermissions,
     checkNotificationsPermissionsStatus,
     setPermissionAndroidNotificationRequestedStorage,
