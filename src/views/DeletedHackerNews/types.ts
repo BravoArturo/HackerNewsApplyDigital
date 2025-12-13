@@ -1,3 +1,6 @@
-export type DeletedHackerNewsViewProps = {};
+import { DeletedHackerNewsScrollViewListProps } from './components/DeletedHackerNewsScrollViewList/types';
 
-export type DeletedHackerNewsViewModelType = {};
+export type DeletedHackerNewsViewProps = DeletedHackerNewsScrollViewListProps;
+
+export type DeletedHackerNewsViewModelType =
+  DeletedHackerNewsScrollViewListProps;

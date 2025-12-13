@@ -2,9 +2,9 @@ import React from 'react';
 import {
   View,
   Text,
-  ScrollView,
   RefreshControl,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import { HackerNewsScrollViewListProps } from './types';
 import HackerNewsItem from '../../../components/HackerNewItem/HackerNewsItem';
@@ -18,9 +18,11 @@ const HackerNewsScrollViewList: React.FC<HackerNewsScrollViewListProps> = ({
   onPressFavorite,
   onSwipe,
   onPressItem,
+  scrollViewRef,
 }) => {
   return (
     <ScrollView
+      ref={scrollViewRef as React.Ref<ScrollView>}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       showsVerticalScrollIndicator={false}
@@ -28,12 +30,12 @@ const HackerNewsScrollViewList: React.FC<HackerNewsScrollViewListProps> = ({
         <RefreshControl refreshing={isLoading} onRefresh={onRefresh} />
       }
     >
-      {hackerNews.length == 0 && <Text>Pull to refresh</Text>}
       {hackerNews.map(item => {
         const { objectID } = item;
         return (
           !deletedHackerNews.includes(objectID) && (
             <HackerNewsItem
+              scrollViewRef={scrollViewRef}
               isFavorite={favoritesHackerNews.includes(objectID)}
               onPressItem={onPressItem}
               item={item}
@@ -53,6 +55,7 @@ export default HackerNewsScrollViewList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
     borderWidth: 1,
   },
   contentContainer: {

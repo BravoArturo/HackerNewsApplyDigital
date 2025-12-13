@@ -5,12 +5,14 @@ import {
   getFavoritesHackerNewsStorage,
   getHackerNewsStorage,
 } from '../storage/hackerNewsStorage';
+import { sortByDate } from '../../../utils/sortByDate';
 
 export const useHackerNewStore = create<hackerNewsStoreType>(set => ({
   hackerNews: getHackerNewsStorage(),
   favoritesHackerNews: getFavoritesHackerNewsStorage(),
   deletedHackerNews: getDeletedHackerNewsStorage(),
-  changeHackerNews: hackerNews => set(() => ({ hackerNews: hackerNews })),
+  changeHackerNews: hackerNews =>
+    set(() => ({ hackerNews: sortByDate(hackerNews) })),
   changeFavoritesHackerNews: favoritesHackerNews =>
     set(() => ({ favoritesHackerNews: favoritesHackerNews })),
   changeDeletedHackerNews: deletedHackerNews =>

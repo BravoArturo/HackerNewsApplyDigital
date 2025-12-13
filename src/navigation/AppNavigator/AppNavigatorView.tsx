@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import TabNavigatorScreen from '../TabNavigator/TabNavigatorScreen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import HomeNavigatorScreen from '../HomeStackNavigator/HomeNavigatorScreen';
 
 const AppNavigatorView = () => {
   return (
@@ -11,7 +11,7 @@ const AppNavigatorView = () => {
       <SafeAreaProvider>
         <View style={[styles.container]}>
           <NavigationContainer>
-            <TabNavigatorScreen />
+            <HomeNavigatorScreen />
           </NavigationContainer>
         </View>
       </SafeAreaProvider>

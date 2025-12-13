@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HackerNewsViewProps } from './types';
 import useHackerNewsViewModel from './useHackerNewsViewModel';
 import { Alert } from 'react-native';
-//TODO: sort by date
+import { ScrollView } from 'react-native-gesture-handler';
 
 function useHackerNewsViewController(): HackerNewsViewProps {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     getHackerNews,
     changeDeletedHackerNews,
@@ -22,22 +21,33 @@ function useHackerNewsViewController(): HackerNewsViewProps {
     navigateToFavoritesHackerNews,
     navigateToSettings,
   } = useHackerNewsViewModel();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const scrollViewRef = useRef<ScrollView>(undefined);
+
+  useEffect(() => {
+    (async () => {
+      await manageHackerNewsData();
+    })();
+  }, []);
 
   const handleChangeIsLoading = (value: boolean) => {
     setIsLoading(value);
   };
 
-  const onRefresh = async () => {
+  const manageHackerNewsData = async () => {
     handleChangeIsLoading(true);
     const responseHackerNews = await getHackerNews();
     if (responseHackerNews.message == 'success') {
       const { hits } = responseHackerNews.response;
       setHackerNewsStorage(hits);
       changeHackerNews(hits);
-    } else {
-      Alert.alert('Try again.');
     }
     handleChangeIsLoading(false);
+  };
+
+  const onRefresh = async () => {
+    await manageHackerNewsData();
   };
 
   const onPressFavorite = (objectID: string) => {
@@ -81,6 +91,7 @@ function useHackerNewsViewController(): HackerNewsViewProps {
   };
 
   return {
+    scrollViewRef,
     onRefresh,
     hackerNews,
     isLoading,

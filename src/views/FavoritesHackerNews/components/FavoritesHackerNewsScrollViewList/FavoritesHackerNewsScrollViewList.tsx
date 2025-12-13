@@ -12,6 +12,7 @@ const FavoritesHackerNewsScrollViewList: React.FC<
   onPressFavorite,
   onPressItem,
   onSwipe,
+  scrollViewRef,
 }) => {
   return (
     <ScrollView
@@ -25,6 +26,7 @@ const FavoritesHackerNewsScrollViewList: React.FC<
           !deletedHackerNews.includes(objectID) &&
           favoritesHackerNews.includes(objectID) && (
             <HackerNewsItem
+              scrollViewRef={scrollViewRef}
               isFavorite
               onPressItem={onPressItem}
               item={item}

@@ -2,7 +2,6 @@ import { RoutesType } from '../types';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { TabStackParamList } from '../TabNavigator/types';
 import { RouteProp } from '@react-navigation/native';
 
 export type HomeStackParamList = {
@@ -20,10 +19,7 @@ export type HomeNavigatorViewProps = {
 };
 
 export type HomeStackNavigationProps<T extends keyof HomeStackParamList> =
-  CompositeNavigationProp<
-    StackNavigationProp<HomeStackParamList, T>,
-    BottomTabNavigationProp<TabStackParamList>
-  >;
+  StackNavigationProp<HomeStackParamList, T>;
 
 export type HomeStackRouteProps<T extends keyof HomeStackParamList> = RouteProp<
   HomeStackParamList,

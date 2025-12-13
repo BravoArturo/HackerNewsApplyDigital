@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { FavoritesHackerNewsViewProps } from './types';
 import useFavoritesHackerNewsViewModel from './useFavoritesHackerNewsViewModel';
 import { Alert } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function useFavoritesHackerNewsViewController(): FavoritesHackerNewsViewProps {
   const {
@@ -15,6 +16,7 @@ function useFavoritesHackerNewsViewController(): FavoritesHackerNewsViewProps {
     setDeletedHackerNewsStorage,
     setFavoritesHackerNewsStorage,
   } = useFavoritesHackerNewsViewModel();
+  const scrollViewRef = useRef<ScrollView>(undefined);
 
   const onPressFavorite = (objectID: string) => {
     let newFavoritesHackerNews: string[];
@@ -51,6 +53,7 @@ function useFavoritesHackerNewsViewController(): FavoritesHackerNewsViewProps {
     onPressFavorite,
     onPressItem,
     onSwipe,
+    scrollViewRef,
   };
 }
 

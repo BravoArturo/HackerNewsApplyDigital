@@ -3,6 +3,7 @@ import React from 'react';
 import { HackerNewWebViewProps } from './types';
 import { WebView } from 'react-native-webview';
 import ErrorLoading from './components/ErrorLoading';
+import ScreenContainer from '../components/ScreenContainer/ScreenContainer';
 
 const HackerNewWebViewView: React.FC<HackerNewWebViewProps> = ({
   url,
@@ -10,20 +11,22 @@ const HackerNewWebViewView: React.FC<HackerNewWebViewProps> = ({
   onPressReloadButton,
 }) => {
   return (
-    <WebView
-      ref={webViewRef}
-      startInLoadingState={true}
-      renderError={() => (
-        <ErrorLoading onPressReloadButton={onPressReloadButton} />
-      )}
-      renderLoading={() => (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator animating={true} size={'large'} />
-        </View>
-      )}
-      source={{ uri: url }}
-      style={styles.webview}
-    />
+    <ScreenContainer>
+      <WebView
+        ref={webViewRef}
+        startInLoadingState={true}
+        renderError={() => (
+          <ErrorLoading onPressReloadButton={onPressReloadButton} />
+        )}
+        renderLoading={() => (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator animating={true} size={'large'} />
+          </View>
+        )}
+        source={{ uri: url }}
+        style={styles.webview}
+      />
+    </ScreenContainer>
   );
 };
 

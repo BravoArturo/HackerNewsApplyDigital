@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import React from 'react';
 import { ErrorLoadingProps } from './types';
-
+//TODO: mejorar el estilo aca
 const ErrorLoading: React.FC<ErrorLoadingProps> = ({ onPressReloadButton }) => {
   return (
     <View style={styles.container}>

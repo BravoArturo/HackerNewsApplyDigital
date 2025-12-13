@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AppNavigatorViewProps } from './types';
-import { Alert, Platform } from 'react-native';
+import { Alert, AppState, Platform, AppStateStatus } from 'react-native';
 import { name } from '../../../package.json';
 import useAppNavigatorViewModel from './useAppNavigatorViewModel';
 import { AuthorizationStatus } from '@notifee/react-native';
@@ -14,7 +14,10 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
     setPermissionAndroidNotificationRequestedStorage,
     getHackerNews,
     setHackerNewsStorage,
+    changeHackerNews,
+    getHackerNewsStorage,
   } = useAppNavigatorViewModel();
+  const appState = useRef<AppStateStatus>(AppState.currentState);
 
   useEffect(() => {
     (async () => {
@@ -28,6 +31,23 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
         await askUserForNotificationPermissions();
       }
       await activeBackgroudFetch();
+
+      const subscription = AppState.addEventListener(
+        'change',
+        async nextAppState => {
+          if (
+            appState.current.match(/inactive|background/) &&
+            nextAppState === 'active'
+          ) {
+            const newHackerNews = getHackerNewsStorage();
+            changeHackerNews(newHackerNews);
+          }
+          appState.current = nextAppState;
+        },
+      );
+      return () => {
+        subscription.remove();
+      };
     })();
   }, []);
 

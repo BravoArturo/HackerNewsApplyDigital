@@ -2,23 +2,28 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import React from 'react';
 import { HackerNewsViewProps } from './types';
 import HackerNewsScrollViewList from './components/HackerNewsScrollViewList/HackerNewsScrollViewList';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ScreenContainer from '../components/ScreenContainer/ScreenContainer';
+import Title from '../components/Title/Title';
+
 const HackerNewsView: React.FC<HackerNewsViewProps> = props => {
   const {
     onPressFavoritesHackerNews,
     onPressDeletedHackerNews,
     onPressSettings,
   } = props;
-  const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, insets]}>
-      <Text>Hacker News</Text>
-      <Button title="Favorites" onPress={onPressFavoritesHackerNews} />
-      <Button title="Deleted" onPress={onPressDeletedHackerNews} />
-      <Button title="Settings" onPress={onPressSettings} />
-      <HackerNewsScrollViewList {...props} />
-    </View>
+    <ScreenContainer>
+      <View style={styles.container}>
+        <Title description="Hacker News" />
+        <View style={styles.buttonsContainer}>
+          <Button title="Favorites" onPress={onPressFavoritesHackerNews} />
+          <Button title="Deleted" onPress={onPressDeletedHackerNews} />
+          <Button title="Settings" onPress={onPressSettings} />
+        </View>
+        <HackerNewsScrollViewList {...props} />
+      </View>
+    </ScreenContainer>
   );
 };
 
@@ -27,5 +32,13 @@ export default HackerNewsView;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  buttonsContainer: {
+    height: '20%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 });

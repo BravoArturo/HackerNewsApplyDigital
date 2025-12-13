@@ -5,6 +5,8 @@ import { HackerNew } from '../../models/news/API/types';
 import { HackerNewsAPIType } from '../../models/news/API/types';
 import { BackgroundFetchStatus } from 'react-native-background-fetch';
 export type AppNavigatorViewModelType = {
+  changeHackerNews: (value: HackerNew[]) => void;
+  getHackerNewsStorage: () => HackerNew[];
   getHackerNews: () => Promise<ResponseType<HackerNewsAPIType, unknown>>;
   setHackerNewsStorage: (hackerNews: HackerNew[]) => void;
   initBackgroundFetch: (
