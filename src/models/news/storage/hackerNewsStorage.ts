@@ -1,6 +1,6 @@
-import { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 import { HackerNew } from '../API/types';
-const storage = new MMKV();
+const storage = createMMKV();
 
 const HACKER_NEWS_STORAGE = 'hackerNewsStorage';
 const FAVORITES_HACKER_NEWS_STORAGE = 'favoritesHackerNewsStorage';

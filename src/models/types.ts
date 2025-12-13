@@ -1,4 +1,4 @@
-export type ResponseAPIType<T, Y> =
+export type ResponseType<T, Y> =
   | {
       message: 'success';
       response: T;

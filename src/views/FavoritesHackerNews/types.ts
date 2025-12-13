@@ -1,8 +1,8 @@
-import { HackerNewsScrollViewListProps } from '../HackerNews/components/HackerNewsScrollViewList/types';
 import { HackerNew } from '../../models/news/API/types';
-import {} from './components/FavoritesHackerNewsScrollViewList/types';
+import { FavoritesHackerNewsScrollViewListProps } from './components/FavoritesHackerNewsScrollViewList/types';
 
-export type FavoritesHackerNewsViewProps = HackerNewsScrollViewListProps & {};
+export type FavoritesHackerNewsViewProps =
+  FavoritesHackerNewsScrollViewListProps;
 
 export type FavoritesHackerNewsViewModelType = {
   setDeletedHackerNewsStorage: (deletedHackerNews: string[]) => void;

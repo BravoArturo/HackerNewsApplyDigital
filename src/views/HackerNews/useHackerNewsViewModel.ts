@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResponseAPIType } from '../../models/types';
+import { ResponseType } from '../../models/types';
 import { getHackerNewsAPI } from '../../models/news/API/news';
 import { HackerNewsViewModelType } from './types';
 import { HackerNewsAPIType } from '../../models/news/API/types';
@@ -39,7 +39,7 @@ function useHackerNewsViewModel(): HackerNewsViewModelType {
   );
 
   const getHackerNews = async (): Promise<
-    ResponseAPIType<HackerNewsAPIType, unknown>
+    ResponseType<HackerNewsAPIType, unknown>
   > => {
     try {
       const response = await getHackerNewsAPI();

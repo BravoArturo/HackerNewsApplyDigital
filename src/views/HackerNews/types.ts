@@ -1,4 +1,4 @@
-import { ResponseAPIType } from '../../models/types';
+import { ResponseType } from '../../models/types';
 import { HackerNewsAPIType, HackerNew } from '../../models/news/API/types';
 import { HackerNewsScrollViewListProps } from './components/HackerNewsScrollViewList/types';
 
@@ -9,7 +9,7 @@ export type HackerNewsViewProps = HackerNewsScrollViewListProps & {
 };
 
 export type HackerNewsViewModelType = {
-  getHackerNews: () => Promise<ResponseAPIType<HackerNewsAPIType, unknown>>;
+  getHackerNews: () => Promise<ResponseType<HackerNewsAPIType, unknown>>;
   setHackerNewsStorage: (hackerNews: HackerNew[]) => void;
   setDeletedHackerNewsStorage: (deletedHackerNews: string[]) => void;
   setFavoritesHackerNewsStorage: (favoritesHackerNews: string[]) => void;

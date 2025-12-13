@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { HackerNewsViewProps } from './types';
 import useHackerNewsViewModel from './useHackerNewsViewModel';
 import { Alert } from 'react-native';
-
+//TODO: sort by date
 function useHackerNewsViewController(): HackerNewsViewProps {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
