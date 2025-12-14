@@ -79,7 +79,6 @@ function useHackerNewsViewController(): HackerNewsViewProps {
   const manageHackerNewsData = async () => {
     handleChangeIsLoading(true);
     const responseHackerNews = await getHackerNews();
-    console.log('a ver la response', responseHackerNews);
 
     if (responseHackerNews.message == 'success') {
       const { hits } = responseHackerNews.response;
