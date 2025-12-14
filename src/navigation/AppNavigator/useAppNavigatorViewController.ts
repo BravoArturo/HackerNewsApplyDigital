@@ -86,12 +86,12 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
             // const allowNotificationsIOS = getAllowNotificationsIOSStorage();
             // const allowNotificationsAndroid =
             //   getAllowNotificationsAndroidStorage();
-            const { title, url, story_title } = hits[0];
-            if (url !== undefined) {
+            const { title, story_url, story_title } = hits[0];
+            if (story_url !== undefined) {
               sendHackerNewsNotification(
                 'Hacker New',
                 title || story_title || 'No title',
-                url,
+                story_url,
               );
             }
           }

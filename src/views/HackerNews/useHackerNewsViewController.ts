@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { HackerNewsViewProps } from './types';
 import useHackerNewsViewModel from './useHackerNewsViewModel';
 import { Alert, AppState, AppStateStatus } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { sendHackerNewsNotification } from '../../utils/notifications';
 import notifee, { EventType } from '@notifee/react-native';
 
@@ -28,8 +27,6 @@ function useHackerNewsViewController(): HackerNewsViewProps {
   const appState = useRef<AppStateStatus>(AppState.currentState);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const scrollViewRef = useRef<ScrollView>(undefined);
 
   useEffect(() => {
     (async () => {
@@ -82,6 +79,8 @@ function useHackerNewsViewController(): HackerNewsViewProps {
   const manageHackerNewsData = async () => {
     handleChangeIsLoading(true);
     const responseHackerNews = await getHackerNews();
+    console.log('a ver la response', responseHackerNews);
+
     if (responseHackerNews.message == 'success') {
       const { hits } = responseHackerNews.response;
       setHackerNewsStorage(hits);
@@ -118,7 +117,7 @@ function useHackerNewsViewController(): HackerNewsViewProps {
     if (story_url) {
       navigateToHackerWebView(story_url);
     } else {
-      Alert.alert('News without url');
+      Alert.alert('New without url');
     }
   };
 
@@ -135,7 +134,6 @@ function useHackerNewsViewController(): HackerNewsViewProps {
   };
 
   return {
-    scrollViewRef,
     onRefresh,
     hackerNews,
     isLoading,

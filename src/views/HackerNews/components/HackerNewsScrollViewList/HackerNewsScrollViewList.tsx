@@ -18,11 +18,9 @@ const HackerNewsScrollViewList: React.FC<HackerNewsScrollViewListProps> = ({
   onPressFavorite,
   onSwipe,
   onPressItem,
-  scrollViewRef,
 }) => {
   return (
     <ScrollView
-      ref={scrollViewRef as React.Ref<ScrollView>}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       showsVerticalScrollIndicator={false}
@@ -35,7 +33,6 @@ const HackerNewsScrollViewList: React.FC<HackerNewsScrollViewListProps> = ({
         return (
           !deletedHackerNews.includes(objectID) && (
             <HackerNewsItem
-              scrollViewRef={scrollViewRef}
               isFavorite={favoritesHackerNews.includes(objectID)}
               onPressItem={onPressItem}
               item={item}

@@ -27,7 +27,6 @@ const HackerNewsItem: React.FC<HackerNewItemProps> = ({
   onPressFavorite,
   onSwipe,
   onPressItem,
-  scrollViewRef,
 }) => {
   const { objectID, author, created_at, story_title, title, story_url } = item;
   const screenWidth = Dimensions.get('window').width;
@@ -43,7 +42,6 @@ const HackerNewsItem: React.FC<HackerNewItemProps> = ({
     .withRef(panRef)
     .activeOffsetX([-15, 15])
     .failOffsetY([-5, 5])
-    .simultaneousWithExternalGesture(scrollViewRef)
     .onChange(event => {
       if (event.translationX < 0) {
         if (event.translationX < 0) {
