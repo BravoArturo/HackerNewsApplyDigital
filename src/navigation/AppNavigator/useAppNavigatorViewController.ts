@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { AppNavigatorViewProps } from './types';
 import { Alert, AppState, Platform, AppStateStatus } from 'react-native';
-import { name } from '../../../package.json';
 import useAppNavigatorViewModel from './useAppNavigatorViewModel';
 import { AuthorizationStatus } from '@notifee/react-native';
 import { sendHackerNewsNotification } from '../../utils/notifications';
@@ -44,7 +43,7 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
   const askUserForNotificationPermissions = async () => {
     Alert.alert(
       'Notification Permissions',
-      'Please grant ' + name + ' permission to send notifications',
+      'Please grant Hacker News permission to send notifications',
       [
         {
           text: 'Accept',
