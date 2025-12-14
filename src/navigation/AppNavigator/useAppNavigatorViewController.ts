@@ -13,7 +13,10 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
     checkNotificationsPermissionsStatus,
     setPermissionAndroidNotificationRequestedStorage,
     getHackerNews,
-    setHackerNewsStorage,
+    getAllowNotificationsAndroidStorage,
+    getAllowNotificationsIOSStorage,
+    getAllowNotificationsStorage,
+    getHackerNewsStorage,
   } = useAppNavigatorViewModel();
   const appState = useRef<AppStateStatus>(AppState.currentState);
 
@@ -55,25 +58,41 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
 
   const activeBackgroudFetch = async () => {
     const status = await initBackgroundFetch(onEventBackgroundFetch);
-    console.log('este es el status', status);
   };
 
   const onEventBackgroundFetch = async (taskId: string) => {
     const responseHackerNews = await getHackerNews();
     if (responseHackerNews.message == 'success') {
       const { hits } = responseHackerNews.response;
-      setHackerNewsStorage(hits);
+      const hackerNewsStorage = getHackerNewsStorage();
+      const isNew = JSON.stringify(hits) === JSON.stringify(hackerNewsStorage);
+      if (isNew) {
+        const responseNotificationsPermissionsStatus =
+          await checkNotificationsPermissionsStatus();
+        if (
+          responseNotificationsPermissionsStatus.message == 'success' &&
+          responseNotificationsPermissionsStatus.response ==
+            AuthorizationStatus.AUTHORIZED
+        ) {
+          const allowNotifications = getAllowNotificationsStorage();
+          if (allowNotifications) {
+            //I couldn't find a way to tell if the news is about Android or iOS
+            // const allowNotificationsIOS = getAllowNotificationsIOSStorage();
+            // const allowNotificationsAndroid =
+            //   getAllowNotificationsAndroidStorage();
+            const { title, url, story_title } = hits[0];
+            if (url !== undefined) {
+              sendHackerNewsNotification(
+                'Hacker New',
+                title || story_title || 'No title',
+                url,
+              );
+            }
+          }
+        }
+      }
     }
-    const responseNotificationsPermissionsStatus =
-      await checkNotificationsPermissionsStatus();
-    if (
-      responseNotificationsPermissionsStatus.message == 'success' &&
-      responseNotificationsPermissionsStatus.response ==
-        AuthorizationStatus.AUTHORIZED
-    ) {
-      //TODO: validar ademas el storage del muchacho
-      sendHackerNewsNotification(taskId, Date.now().toString(), 'test');
-    }
+
     BackgroundFetch.finish(taskId);
   };
 }

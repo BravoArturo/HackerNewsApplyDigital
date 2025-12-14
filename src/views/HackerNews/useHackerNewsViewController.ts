@@ -33,6 +33,7 @@ function useHackerNewsViewController(): HackerNewsViewProps {
 
   useEffect(() => {
     (async () => {
+      removeURLStorage();
       await manageHackerNewsData();
       const subscription = AppState.addEventListener(
         'change',
@@ -42,7 +43,6 @@ function useHackerNewsViewController(): HackerNewsViewProps {
             nextAppState === 'active'
           ) {
             const URLStore = getURLStorage();
-            console.log('che que onda', URLStore);
 
             if (URLStore !== undefined) {
               navigateToHackerWebView(URLStore);
@@ -123,8 +123,7 @@ function useHackerNewsViewController(): HackerNewsViewProps {
   };
 
   const onPressFavoritesHackerNews = () => {
-    sendHackerNewsNotification('test', 'test', 'a ver che');
-    //navigateToFavoritesHackerNews();
+    navigateToFavoritesHackerNews();
   };
 
   const onPressDeletedHackerNews = () => {

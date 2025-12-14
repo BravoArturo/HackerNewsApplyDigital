@@ -5,8 +5,11 @@ import { HackerNew } from '../../models/news/API/types';
 import { HackerNewsAPIType } from '../../models/news/API/types';
 import { BackgroundFetchStatus } from 'react-native-background-fetch';
 export type AppNavigatorViewModelType = {
+  getAllowNotificationsIOSStorage: () => boolean;
+  getAllowNotificationsStorage: () => boolean;
+  getAllowNotificationsAndroidStorage: () => boolean;
   getHackerNews: () => Promise<ResponseType<HackerNewsAPIType, unknown>>;
-  setHackerNewsStorage: (hackerNews: HackerNew[]) => void;
+  getHackerNewsStorage: () => HackerNew[];
   initBackgroundFetch: (
     onEvent: (taskId: string) => Promise<void>,
   ) => Promise<BackgroundFetchStatus>;

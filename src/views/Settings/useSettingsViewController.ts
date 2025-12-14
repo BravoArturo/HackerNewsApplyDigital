@@ -35,10 +35,8 @@ function useSettingsViewController(): SettingsViewProps {
   const onChangeNotificationsValue = (value: boolean) => {
     setAllowNotificationsStore(value);
     handleChangeNotificationsValue(value);
-    if (!value) {
-      onChangeNotificationsAndroidValue(value);
-      onChangeNotificationsIOSValue(value);
-    }
+    onChangeNotificationsAndroidValue(value);
+    onChangeNotificationsIOSValue(value);
   };
   const onChangeNotificationsAndroidValue = (value: boolean) => {
     setAllowNotificationsAndroidStore(value);

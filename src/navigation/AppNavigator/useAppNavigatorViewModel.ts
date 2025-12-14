@@ -7,13 +7,16 @@ import notifee, {
 import { AppNavigatorViewModelType } from './types';
 import { Platform } from 'react-native';
 import {
+  getAllowNotificationsAndroidStorage,
+  getAllowNotificationsIOSStorage,
+  getAllowNotificationsStorage,
   getPermissionAndroidNotificationRequestedStorage,
   setPermissionAndroidNotificationRequestedStorage,
 } from '../../models/notifications/android/storage/notificationsAndroidStorage';
 import BackgroundFetch, {
   BackgroundFetchStatus,
 } from 'react-native-background-fetch';
-import { setHackerNewsStorage } from '../../models/news/storage/hackerNewsStorage';
+import { getHackerNewsStorage } from '../../models/news/storage/hackerNewsStorage';
 import { getHackerNewsAPI } from '../../models/news/API/news';
 import { HackerNewsAPIType } from '../../models/news/API/types';
 
@@ -79,8 +82,11 @@ function useAppNavigatorViewModel(): AppNavigatorViewModelType {
   };
 
   return {
+    getAllowNotificationsAndroidStorage,
+    getAllowNotificationsIOSStorage,
+    getAllowNotificationsStorage,
     getHackerNews,
-    setHackerNewsStorage,
+    getHackerNewsStorage,
     initBackgroundFetch,
     requestNotificationPermissions,
     checkNotificationsPermissionsStatus,
