@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { HackerNewsViewProps } from './types';
 import useHackerNewsViewModel from './useHackerNewsViewModel';
-import { Alert } from 'react-native';
+import { Alert, AppState, AppStateStatus } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { sendHackerNewsNotification } from '../../utils/notifications';
+import notifee, { EventType } from '@notifee/react-native';
 
 function useHackerNewsViewController(): HackerNewsViewProps {
   const {
@@ -20,7 +22,11 @@ function useHackerNewsViewController(): HackerNewsViewProps {
     navigateToDeletedHackerNews,
     navigateToFavoritesHackerNews,
     navigateToSettings,
+    getURLStorage,
+    removeURLStorage,
   } = useHackerNewsViewModel();
+  const appState = useRef<AppStateStatus>(AppState.currentState);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const scrollViewRef = useRef<ScrollView>(undefined);
@@ -28,7 +34,45 @@ function useHackerNewsViewController(): HackerNewsViewProps {
   useEffect(() => {
     (async () => {
       await manageHackerNewsData();
+      const subscription = AppState.addEventListener(
+        'change',
+        async nextAppState => {
+          if (
+            appState.current.match(/inactive|background/) &&
+            nextAppState === 'active'
+          ) {
+            const URLStore = getURLStorage();
+            console.log('che que onda', URLStore);
+
+            if (URLStore !== undefined) {
+              navigateToHackerWebView(URLStore);
+              removeURLStorage();
+            }
+          }
+          appState.current = nextAppState;
+        },
+      );
+      return () => {
+        subscription.remove();
+      };
     })();
+  }, []);
+
+  useEffect(() => {
+    return notifee.onForegroundEvent(async ({ type, detail }) => {
+      if (type == EventType.PRESS) {
+        const { notification } = detail;
+        if (notification?.data !== undefined && notification.id !== undefined) {
+          if ('url' in notification.data) {
+            const urlHackerNew = notification.data.url as string;
+            if (urlHackerNew) {
+              navigateToHackerWebView(urlHackerNew);
+            }
+            await notifee.cancelNotification(notification.id);
+          }
+        }
+      }
+    });
   }, []);
 
   const handleChangeIsLoading = (value: boolean) => {
@@ -79,7 +123,8 @@ function useHackerNewsViewController(): HackerNewsViewProps {
   };
 
   const onPressFavoritesHackerNews = () => {
-    navigateToFavoritesHackerNews();
+    sendHackerNewsNotification('test', 'test', 'a ver che');
+    //navigateToFavoritesHackerNews();
   };
 
   const onPressDeletedHackerNews = () => {

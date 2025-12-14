@@ -5,7 +5,7 @@ import { name } from '../../../package.json';
 import useAppNavigatorViewModel from './useAppNavigatorViewModel';
 import { AuthorizationStatus } from '@notifee/react-native';
 import { sendHackerNewsNotification } from '../../utils/notifications';
-
+import BackgroundFetch from 'react-native-background-fetch';
 function useAppNavigatorViewController(): AppNavigatorViewProps {
   const {
     initBackgroundFetch,
@@ -14,8 +14,6 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
     setPermissionAndroidNotificationRequestedStorage,
     getHackerNews,
     setHackerNewsStorage,
-    changeHackerNews,
-    getHackerNewsStorage,
   } = useAppNavigatorViewModel();
   const appState = useRef<AppStateStatus>(AppState.currentState);
 
@@ -31,23 +29,6 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
         await askUserForNotificationPermissions();
       }
       await activeBackgroudFetch();
-
-      const subscription = AppState.addEventListener(
-        'change',
-        async nextAppState => {
-          if (
-            appState.current.match(/inactive|background/) &&
-            nextAppState === 'active'
-          ) {
-            const newHackerNews = getHackerNewsStorage();
-            changeHackerNews(newHackerNews);
-          }
-          appState.current = nextAppState;
-        },
-      );
-      return () => {
-        subscription.remove();
-      };
     })();
   }, []);
 
@@ -91,8 +72,9 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
         AuthorizationStatus.AUTHORIZED
     ) {
       //TODO: validar ademas el storage del muchacho
-      sendHackerNewsNotification(taskId, Date.now().toString());
+      sendHackerNewsNotification(taskId, Date.now().toString(), 'test');
     }
+    BackgroundFetch.finish(taskId);
   };
 }
 

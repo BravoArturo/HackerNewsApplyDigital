@@ -13,20 +13,11 @@ import {
 import BackgroundFetch, {
   BackgroundFetchStatus,
 } from 'react-native-background-fetch';
-import {
-  setHackerNewsStorage,
-  getHackerNewsStorage,
-} from '../../models/news/storage/hackerNewsStorage';
+import { setHackerNewsStorage } from '../../models/news/storage/hackerNewsStorage';
 import { getHackerNewsAPI } from '../../models/news/API/news';
 import { HackerNewsAPIType } from '../../models/news/API/types';
-import { useHackerNewStore } from '../../models/news/store/hackerNewsStore';
-import { useShallow } from 'zustand/react/shallow';
 
 function useAppNavigatorViewModel(): AppNavigatorViewModelType {
-  const changeHackerNews = useHackerNewStore(
-    useShallow(state => state.changeHackerNews),
-  );
-
   const requestNotificationPermissions = async (): Promise<
     ResponseType<NotificationSettings, unknown>
   > => {
@@ -88,8 +79,6 @@ function useAppNavigatorViewModel(): AppNavigatorViewModelType {
   };
 
   return {
-    changeHackerNews,
-    getHackerNewsStorage,
     getHackerNews,
     setHackerNewsStorage,
     initBackgroundFetch,

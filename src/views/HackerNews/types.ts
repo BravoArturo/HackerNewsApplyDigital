@@ -9,6 +9,8 @@ export type HackerNewsViewProps = HackerNewsScrollViewListProps & {
 };
 
 export type HackerNewsViewModelType = {
+  removeURLStorage: () => void;
+  getURLStorage: () => string | undefined;
   getHackerNews: () => Promise<ResponseType<HackerNewsAPIType, unknown>>;
   setHackerNewsStorage: (hackerNews: HackerNew[]) => void;
   setDeletedHackerNewsStorage: (deletedHackerNews: string[]) => void;

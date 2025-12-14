@@ -12,6 +12,10 @@ import {
   setDeletedHackerNewsStorage,
   setFavoritesHackerNewsStorage,
 } from '../../models/news/storage/hackerNewsStorage';
+import {
+  getURLStorage,
+  removeURLStorage,
+} from '../../models/notifications/android/storage/notificationsAndroidStorage';
 
 function useHackerNewsViewModel(): HackerNewsViewModelType {
   const navigation = useNavigation<HomeStackNavigationProps<'HackerNews'>>();
@@ -66,6 +70,8 @@ function useHackerNewsViewModel(): HackerNewsViewModelType {
   };
 
   return {
+    getURLStorage,
+    removeURLStorage,
     getHackerNews,
     changeDeletedHackerNews,
     changeFavoritesHackerNews,

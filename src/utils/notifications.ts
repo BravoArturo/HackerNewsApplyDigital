@@ -1,11 +1,11 @@
 import notifee from '@notifee/react-native';
-
 const ANDROID_HACKER_NEWS_ID = 'androidHackerNewsId';
 const ANDROID_HACKER_NEWS_NAME = 'Hacker News';
 
 export const sendHackerNewsNotification = async (
   title: string,
   body: string,
+  url: string,
 ) => {
   try {
     const channelId = await notifee.createChannel({
@@ -14,13 +14,17 @@ export const sendHackerNewsNotification = async (
     });
 
     await notifee.displayNotification({
+      data: {
+        url,
+      },
       title: title,
       body: body,
       android: {
         channelId,
-        //   pressAction: {
-        //     id: 'default',
-        //   },
+        pressAction: {
+          id: 'default',
+          launchActivity: 'default',
+        },
       },
     });
   } catch (error) {
