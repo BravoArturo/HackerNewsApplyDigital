@@ -65,7 +65,7 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
     if (responseHackerNews.message == 'success') {
       const { hits } = responseHackerNews.response;
       const hackerNewsStorage = getHackerNewsStorage();
-      const isNew = JSON.stringify(hits) === JSON.stringify(hackerNewsStorage);
+      const isNew = JSON.stringify(hits) !== JSON.stringify(hackerNewsStorage);
       if (isNew) {
         const responseNotificationsPermissionsStatus =
           await checkNotificationsPermissionsStatus();
