@@ -7,6 +7,9 @@ import notifee, {
 import { AppNavigatorViewModelType } from './types';
 import { Platform } from 'react-native';
 import {
+  setAllowNotificationsAndroidStore,
+  setAllowNotificationsIOSStore,
+  setAllowNotificationsStore,
   getAllowNotificationsAndroidStorage,
   getAllowNotificationsIOSStorage,
   getAllowNotificationsStorage,
@@ -91,6 +94,9 @@ function useAppNavigatorViewModel(): AppNavigatorViewModelType {
     requestNotificationPermissions,
     checkNotificationsPermissionsStatus,
     setPermissionAndroidNotificationRequestedStorage,
+    setAllowNotificationsAndroidStore,
+    setAllowNotificationsIOSStore,
+    setAllowNotificationsStore,
   };
 }
 

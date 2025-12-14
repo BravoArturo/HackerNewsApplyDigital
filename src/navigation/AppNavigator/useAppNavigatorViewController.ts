@@ -13,8 +13,11 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
     checkNotificationsPermissionsStatus,
     setPermissionAndroidNotificationRequestedStorage,
     getHackerNews,
-    getAllowNotificationsAndroidStorage,
-    getAllowNotificationsIOSStorage,
+    setAllowNotificationsAndroidStore,
+    setAllowNotificationsIOSStore,
+    setAllowNotificationsStore,
+    // getAllowNotificationsAndroidStorage,
+    // getAllowNotificationsIOSStorage,
     getAllowNotificationsStorage,
     getHackerNewsStorage,
   } = useAppNavigatorViewModel();
@@ -29,6 +32,9 @@ function useAppNavigatorViewController(): AppNavigatorViewProps {
         responseNotificationsPermissionsStatus.response ==
           AuthorizationStatus.NOT_DETERMINED
       ) {
+        setAllowNotificationsStore(true);
+        setAllowNotificationsAndroidStore(true);
+        setAllowNotificationsIOSStore(true);
         await askUserForNotificationPermissions();
       }
       await activeBackgroudFetch();

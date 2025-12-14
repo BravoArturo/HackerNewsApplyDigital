@@ -5,6 +5,9 @@ import { HackerNew } from '../../models/news/API/types';
 import { HackerNewsAPIType } from '../../models/news/API/types';
 import { BackgroundFetchStatus } from 'react-native-background-fetch';
 export type AppNavigatorViewModelType = {
+  setAllowNotificationsAndroidStore: (value: boolean) => void;
+  setAllowNotificationsIOSStore: (value: boolean) => void;
+  setAllowNotificationsStore: (value: boolean) => void;
   getAllowNotificationsIOSStorage: () => boolean;
   getAllowNotificationsStorage: () => boolean;
   getAllowNotificationsAndroidStorage: () => boolean;
