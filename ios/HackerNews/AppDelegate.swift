@@ -1,4 +1,5 @@
 import UIKit
+import TSBackgroundFetch
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
@@ -28,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       in: window,
       launchOptions: launchOptions
     )
-
+    TSBackgroundFetch.sharedInstance().didFinishLaunching();
     return true
   }
 }

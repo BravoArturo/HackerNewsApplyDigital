@@ -11,6 +11,7 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import AppNavigatorScreen from './src/navigation/AppNavigator/AppNavigatorScreen';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -26,14 +27,7 @@ function App() {
 function AppContent() {
   const safeAreaInsets = useSafeAreaInsets();
 
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
+  return <AppNavigatorScreen />;
 }
 
 const styles = StyleSheet.create({
